@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 17% 98%; /* #F8F9FA - New light cool gray */
+    --foreground: 210 10% 23%; /* #212529 - New dark gray for text */
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 10% 23%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 10% 23%;
+
+    --primary: 122 45% 34%; /* #2E7D32 - krz-primary-green */
+    --primary-foreground: 100 0% 100%; /* White text for primary buttons */
+
+    --secondary: 124 30% 55%; 
+    --secondary-foreground: 210 10% 23%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 125 45% 72%; /* #A5D6A7 - krz-light-accent-green */
+    --accent-foreground: 210 10% 23%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 122 30% 80%; 
+    --input: 122 30% 85%; 
+    --ring: 123 40% 40%; /* #43A047 - krz-button-green for focus rings */
+
+    --radius: 0.5rem;
+
+    /* KRZ Specific Colors - can be used directly or via theme() in Tailwind */
+    --krz-primary-green: #2E7D32;
+    --krz-light-accent-green: #A5D6A7;
+    --krz-button-green: #43A047;
+    --krz-light-background: #F8F9FA; /* Updated */
+    --krz-text-dark-gray: #212529; /* Updated */
+  }
+
+  .dark {
+    --background: 210 10% 15%; /* Darker background for dark mode */
+    --foreground: 210 17% 90%; /* Lighter text for dark mode */
+
+    --card: 210 10% 20%;
+    --card-foreground: 210 17% 90%;
+
+    --popover: 210 10% 20%;
+    --popover-foreground: 210 17% 90%;
+
+    --primary: 122 45% 44%; 
+    --primary-foreground: 100 0% 100%;
+
+    --secondary: 124 30% 35%;
+    --secondary-foreground: 210 17% 90%;
+    
+    --accent: 125 45% 62%;
+    --accent-foreground: 210 17% 90%;
+
+    --border: 122 30% 30%;
+    --input: 122 30% 25%;
+    --ring: 123 40% 50%;
+
+    --krz-light-background: #1A1D1E; /* Dark mode equivalent */
+    --krz-text-dark-gray: #EAEBEB; /* Dark mode equivalent */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground; /* Uses CSS variables */
+    font-family: 'Poppins', 'Inter', 'Montserrat', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold uppercase tracking-tight;
+    font-family: 'Montserrat', 'Poppins', sans-serif; 
+  }
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  p {
+    @apply text-base leading-relaxed font-light; 
+    font-family: 'Inter', 'Poppins', sans-serif; 
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background) / 0.5);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.7);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+}
+
+.glassmorphism-card {
+  background: rgba(255, 255, 255, 0.6); /* Adjusted for new background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  border: 1px solid rgba(46, 125, 50, 0.15); 
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+}
+
+.dark .glassmorphism-card {
+  background: rgba(var(--krz-primary-green-rgb), 0.1); /* Using RGB for alpha */
+  border: 1px solid rgba(var(--krz-light-accent-green-rgb), 0.15);
+}
+
+.btn-primary-gradient {
+  @apply bg-gradient-to-r from-krz-button-green to-krz-primary-green text-white;
+}
+
+.text-gradient-green {
+  @apply bg-gradient-to-r from-krz-primary-green to-krz-button-green bg-clip-text text-transparent;
+}
