@@ -1,24 +1,23 @@
-
-import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { servicePaths } from '@/config/paths'; // Updated import
+import React, { useState, useEffect } from "react";
+import { Link as RouterLink, NavLink, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Zap, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { servicePaths } from "@/config/paths"; // Updated import
 
 const mainNavLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'About Us', path: '/about' },
-  { name: 'Services', path: '/services' }, // Main services link
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'Contact', path: '/contact' },
+  { name: "Home", path: "/" },
+  { name: "About Us", path: "/about" },
+  { name: "Services", path: "/services" }, // Main services link
+  { name: "Portfolio", path: "/portfolio" },
+  { name: "Contact", path: "/contact" },
 ];
 
 const serviceSubLinks = [
-  { name: '3D Printing', path: servicePaths['3d-printing'] },
-  { name: 'CAD Design', path: servicePaths['cad-design'] },
-  { name: 'CNC Machining', path: servicePaths['cnc-machining'] },
-  { name: 'Laser Cutting', path: servicePaths['laser-cutting'] },
+  { name: "3D Printing", path: servicePaths["3d-printing"] },
+  { name: "CAD Design", path: servicePaths["cad-design"] },
+  { name: "CNC Machining", path: servicePaths["cnc-machining"] },
+  { name: "Laser Cutting", path: servicePaths["laser-cutting"] },
 ];
 
 const Header = () => {
@@ -27,15 +26,16 @@ const Header = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null); // For desktop dropdown
   const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState(false); // For mobile accordion
   const location = useLocation();
+  const [submenuTimeout, setSubmenuTimeout] = useState(null); // To delay submenu close
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleMobileSubmenu = () => setMobileSubmenuOpen(!mobileSubmenuOpen);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -46,7 +46,11 @@ const Header = () => {
 
   const menuVariants = {
     closed: { opacity: 0, height: 0 },
-    open: { opacity: 1, height: 'auto', transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
+    open: {
+      opacity: 1,
+      height: "auto",
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+    },
   };
 
   const menuItemVariants = {
@@ -57,19 +61,9 @@ const Header = () => {
   const NavItem = ({ to, children, exact = false, onClick }) => {
     const linkClass = ({ isActive }) =>
       `px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-        isActive ? 'bg-krz-light-accent-green text-krz-primary-green' : 'text-foreground hover:bg-krz-light-accent-green/50 hover:text-krz-primary-green'
-      }`;
-    return (
-      <NavLink to={to} className={linkClass} end={exact} onClick={onClick}>
-        {children}
-      </NavLink>
-    );
-  };
-  
-  const MobileNavItem = ({ to, children, exact = false, onClick }) => {
-     const linkClass = ({ isActive }) =>
-      `block px-4 py-3 rounded-md text-base font-medium transition-colors ${
-        isActive ? 'bg-krz-light-accent-green text-krz-primary-green' : 'text-foreground hover:bg-krz-light-accent-green/70 hover:text-krz-primary-green'
+        isActive
+          ? "bg-krz-light-accent-green text-krz-primary-green"
+          : "text-foreground hover:bg-krz-light-accent-green/50 hover:text-krz-primary-green"
       }`;
     return (
       <NavLink to={to} className={linkClass} end={exact} onClick={onClick}>
@@ -78,9 +72,28 @@ const Header = () => {
     );
   };
 
+  const MobileNavItem = ({ to, children, exact = false, onClick }) => {
+    const linkClass = ({ isActive }) =>
+      `block px-4 py-3 rounded-md text-base font-medium transition-colors ${
+        isActive
+          ? "bg-krz-light-accent-green text-krz-primary-green"
+          : "text-foreground hover:bg-krz-light-accent-green/70 hover:text-krz-primary-green"
+      }`;
+    return (
+      <NavLink to={to} className={linkClass} end={exact} onClick={onClick}>
+        {children}
+      </NavLink>
+    );
+  };
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-lg shadow-lg' : 'bg-background/80 backdrop-blur-md'}`}>
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-lg shadow-lg"
+          : "bg-background/80 backdrop-blur-md"
+      }`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <motion.div
@@ -88,57 +101,94 @@ const Header = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <RouterLink to="/" className="flex items-center space-x-2 text-krz-primary-green hover:text-krz-button-green transition-colors">
-              <Zap size={36} className="transform group-hover:scale-110 transition-transform duration-300" />
-              <span className="text-2xl md:text-3xl font-bold uppercase tracking-tighter">KRZ ENG</span>
+            <RouterLink
+              to="/"
+              className="flex items-center space-x-2 text-krz-primary-green hover:text-krz-button-green transition-colors"
+            >
+              <Zap
+                size={36}
+                className="transform group-hover:scale-110 transition-transform duration-300"
+              />
+              <span className="text-2xl md:text-3xl font-bold uppercase tracking-tighter">
+                KRZ ENGINEERING
+              </span>
             </RouterLink>
           </motion.div>
 
           <nav className="hidden md:flex space-x-1 lg:space-x-2 items-center">
-            {mainNavLinks.map((link) => (
-              link.name === 'Services' ? (
-                <div 
+            {mainNavLinks.map((link) =>
+              link.name === "Services" ? (
+                <div
                   key={link.name}
                   className="relative group"
-                  onMouseEnter={() => setOpenSubmenu('services')}
-                  onMouseLeave={() => setOpenSubmenu(null)}
+                  onMouseEnter={() => {
+                    if (submenuTimeout) clearTimeout(submenuTimeout);
+                    setOpenSubmenu("services");
+                  }}
+                  onMouseLeave={() => {
+                    const timeout = setTimeout(() => {
+                      setOpenSubmenu(null);
+                    }, 200); // Delay in ms
+                    setSubmenuTimeout(timeout);
+                  }}
                 >
                   <NavLink
                     to={link.path}
                     className={({ isActive }) =>
                       `px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 flex items-center ${
-                        isActive || location.pathname.startsWith('/services/') ? 'bg-krz-light-accent-green text-krz-primary-green' : 'text-foreground hover:bg-krz-light-accent-green/50 hover:text-krz-primary-green'
+                        isActive || location.pathname.startsWith("/services/")
+                          ? "bg-krz-light-accent-green text-krz-primary-green"
+                          : "text-foreground hover:bg-krz-light-accent-green/50 hover:text-krz-primary-green"
                       }`
                     }
                   >
                     {link.name}
-                    <ChevronDown size={16} className={`ml-1 transition-transform duration-200 ${openSubmenu === 'services' ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      size={16}
+                      className={`ml-1 transition-transform duration-200 ${
+                        openSubmenu === "services" ? "rotate-180" : ""
+                      }`}
+                    />
                   </NavLink>
-                  {openSubmenu === 'services' && (
-                    <motion.div 
+                  {openSubmenu === "services" && (
+                    <motion.div
                       className="absolute left-0 top-full mt-2 bg-background shadow-lg rounded-md py-2 min-w-[220px] z-20"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                     >
-                      {serviceSubLinks.map(subLink => (
-                         <RouterLink 
-                            key={subLink.name} 
-                            to={subLink.path} 
-                            className={`block px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 text-foreground hover:bg-krz-light-accent-green/50 hover:text-krz-primary-green ${location.pathname === subLink.path ? 'bg-krz-light-accent-green/50 text-krz-primary-green' : ''}`}
-                          >
-                            {subLink.name}
+                      {serviceSubLinks.map((subLink) => (
+                        <RouterLink
+                          key={subLink.name}
+                          to={subLink.path}
+                          className={`block px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 text-foreground hover:bg-krz-light-accent-green/50 hover:text-krz-primary-green ${
+                            location.pathname === subLink.path
+                              ? "bg-krz-light-accent-green/50 text-krz-primary-green"
+                              : ""
+                          }`}
+                        >
+                          {subLink.name}
                         </RouterLink>
                       ))}
                     </motion.div>
                   )}
                 </div>
               ) : (
-                <NavItem key={link.name} to={link.path} exact={link.path === '/'}>{link.name}</NavItem>
+                <NavItem
+                  key={link.name}
+                  to={link.path}
+                  exact={link.path === "/"}
+                >
+                  {link.name}
+                </NavItem>
               )
-            ))}
+            )}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button asChild size="sm" className="bg-krz-button-green hover:bg-krz-primary-green text-white ml-2">
+              <Button
+                asChild
+                size="sm"
+                className="bg-krz-button-green hover:bg-krz-primary-green text-white ml-2"
+              >
                 <RouterLink to="/contact">Get a Quote</RouterLink>
               </Button>
             </motion.div>
@@ -170,40 +220,64 @@ const Header = () => {
             <nav className="flex flex-col space-y-1 px-4 pt-2">
               {mainNavLinks.map((link) => (
                 <motion.div variants={menuItemVariants} key={link.name}>
-                  {link.name === 'Services' ? (
+                  {link.name === "Services" ? (
                     <div>
                       <button
                         onClick={toggleMobileSubmenu}
                         className={`w-full text-left flex justify-between items-center px-4 py-3 rounded-md text-base font-medium transition-colors ${
-                           location.pathname.startsWith('/services/') ? 'bg-krz-light-accent-green text-krz-primary-green' : 'text-foreground hover:bg-krz-light-accent-green/70 hover:text-krz-primary-green'
+                          location.pathname.startsWith("/services/")
+                            ? "bg-krz-light-accent-green text-krz-primary-green"
+                            : "text-foreground hover:bg-krz-light-accent-green/70 hover:text-krz-primary-green"
                         }`}
                       >
                         {link.name}
-                        <ChevronDown size={20} className={`transition-transform duration-200 ${mobileSubmenuOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown
+                          size={20}
+                          className={`transition-transform duration-200 ${
+                            mobileSubmenuOpen ? "rotate-180" : ""
+                          }`}
+                        />
                       </button>
                       <AnimatePresence>
                         {mobileSubmenuOpen && (
-                          <motion.div 
+                          <motion.div
                             className="pl-4 mt-1 space-y-1"
                             initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
+                            animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
                           >
-                            {serviceSubLinks.map(subLink => (
-                              <MobileNavItem key={subLink.name} to={subLink.path} onClick={toggleMenu}>{subLink.name}</MobileNavItem>
+                            {serviceSubLinks.map((subLink) => (
+                              <MobileNavItem
+                                key={subLink.name}
+                                to={subLink.path}
+                                onClick={toggleMenu}
+                              >
+                                {subLink.name}
+                              </MobileNavItem>
                             ))}
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
                   ) : (
-                    <MobileNavItem to={link.path} exact={link.path === '/'} onClick={toggleMenu}>{link.name}</MobileNavItem>
+                    <MobileNavItem
+                      to={link.path}
+                      exact={link.path === "/"}
+                      onClick={toggleMenu}
+                    >
+                      {link.name}
+                    </MobileNavItem>
                   )}
                 </motion.div>
               ))}
               <motion.div variants={menuItemVariants} className="pt-2">
-                <Button asChild className="w-full bg-krz-button-green hover:bg-krz-primary-green text-white">
-                  <RouterLink to="/contact" onClick={toggleMenu}>Get a Quote</RouterLink>
+                <Button
+                  asChild
+                  className="w-full bg-krz-button-green hover:bg-krz-primary-green text-white"
+                >
+                  <RouterLink to="/contact" onClick={toggleMenu}>
+                    Get a Quote
+                  </RouterLink>
                 </Button>
               </motion.div>
             </nav>
