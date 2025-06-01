@@ -91,21 +91,21 @@ const HomePage = () => {
       title: "Intricate Gear System",
       query: "detailed fdm 3d printed gear system",
       alt: "Complex gear system printed in grey FDM material",
-      src: "https://images.unsplash.com/photo-1627398242454-45a1465c2479",
+      src: "/assets/images/gear-system.jpg",
     },
     {
       id: 2,
       title: "Artistic Steel Panel",
       query: "laser cut artistic steel panel",
       alt: "Decorative steel panel with a flowing pattern, laser-cut",
-      src: "https://images.unsplash.com/photo-1604578762000-43813838c994",
+      src: "/assets/images/steel-panel.jpg",
     },
     {
       id: 3,
       title: "High-Detail Figurine",
       query: "high detail resin 3d printed figurine",
       alt: "Smooth and detailed character figurine printed in white resin",
-      src: "https://images.unsplash.com/photo-1604754742629-AC92dd189194",
+      src: "/assets/images/printed-figure.jpg",
     },
   ];
 
@@ -304,7 +304,7 @@ const HomePage = () => {
                 <img
                   className="w-full h-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
                   alt={item.alt}
-                  src="https://images.unsplash.com/photo-1627398242454-45a1465c2479"
+                  src={item.src}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                   <h3 className="text-lg font-semibold text-white mb-1">

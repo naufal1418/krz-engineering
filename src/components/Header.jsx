@@ -10,7 +10,6 @@ const mainNavLinks = [
   { name: "About Us", path: "/about" },
   { name: "Services", path: "/services" }, // Main services link
   { name: "Portfolio", path: "/portfolio" },
-  { name: "Contact", path: "/contact" },
 ];
 
 const serviceSubLinks = [
@@ -94,8 +93,8 @@ const Header = () => {
           : "bg-background/80 backdrop-blur-md"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center justify-between h-30">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -105,9 +104,10 @@ const Header = () => {
               to="/"
               className="flex items-center space-x-2 text-krz-primary-green hover:text-krz-button-green transition-colors"
             >
-              <Zap
-                size={36}
-                className="transform group-hover:scale-110 transition-transform duration-300"
+              <img
+                src="/assets/icons/logo.png"
+                alt="KRZ Logo"
+                className="h-20 w-20 text-[#34A853]"
               />
               <span className="text-2xl md:text-3xl font-bold uppercase tracking-tighter">
                 KRZ ENGINEERING

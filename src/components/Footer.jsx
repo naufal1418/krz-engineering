@@ -54,9 +54,13 @@ const Footer = () => {
               onClick={(e) => handleScrollToSection(e, "home")}
               className="flex items-center space-x-2 mb-4 text-krz-primary-green hover:text-krz-button-green transition-colors"
             >
-              <Zap size={32} />
+              <img
+                src="/assets/icons/android-chrome-512x512.png"
+                alt="KRZ Logo"
+                className="h-20 w-20 text-[#34A853]"
+              />
               <span className="text-2xl font-bold uppercase tracking-tighter">
-                KRZ ENG
+                KRZ ENGINEERING
               </span>
             </a>
             <p className="text-sm">
@@ -150,9 +154,14 @@ const Footer = () => {
           </p>
           <p className="text-xs mt-2">
             Powered by{" "}
-            <span className="font-semibold text-krz-light-accent-green">
+            <a
+              href="https://datalkemi.com" // <-- replace with your actual URL
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-krz-light-accent-green hover:underline"
+            >
               Datalkemi
-            </span>
+            </a>
           </p>
         </div>
       </div>
