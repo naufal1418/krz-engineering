@@ -87,7 +87,7 @@ const ContactSection = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
       toast({
@@ -100,30 +100,53 @@ const ContactSection = () => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      console.log("Form data submitted:", formData);
-      localStorage.setItem(
-        "contactFormSubmission",
-        JSON.stringify({ ...formData, submittedAt: new Date().toISOString() })
-      );
+    try {
+      const response = await fetch("https://formspree.io/f/xqabzjrl", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          serviceType: formData.serviceType,
+          message: formData.message,
+        }),
+      });
 
+      const result = await response.json();
+
+      if (response.ok) {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          serviceType: "",
+          message: "",
+        });
+
+        toast({
+          title: "Message Sent! 🎉",
+          description:
+            "Thank you for your inquiry. We'll get back to you soon.",
+          variant: "default",
+          className: "bg-krz-button-green text-white",
+        });
+      } else {
+        throw new Error(result?.error || "Something went wrong.");
+      }
+    } catch (error) {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        serviceType: "",
-        message: "",
-      });
-
       toast({
-        title: "Message Sent! 🎉",
-        description: "Thank you for your inquiry. We'll get back to you soon.",
-        variant: "default",
-        className: "bg-krz-button-green text-white",
+        title: "Submission Failed",
+        description: error.message || "Please try again later.",
+        variant: "destructive",
       });
-    }, 1500);
+    }
   };
 
   useEffect(() => {
