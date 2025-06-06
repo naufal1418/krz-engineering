@@ -5,6 +5,7 @@ import {
   Linkedin,
   Facebook,
   Instagram,
+  Twitter,
   Mail,
   Phone,
   MapPin,
@@ -39,9 +40,26 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: <Linkedin size={20} />, href: "#", label: "LinkedIn" },
-    { icon: <Instagram size={20} />, href: "#", label: "Instagram" },
-    { icon: <Facebook size={20} />, href: "#", label: "Facebook" },
+    {
+      icon: <Linkedin size={20} />,
+      href: "https://www.linkedin.com/company/krz-engineering/",
+      label: "LinkedIn",
+    },
+    {
+      icon: <Instagram size={20} />,
+      href: "https://www.instagram.com/krzengineering/",
+      label: "Instagram",
+    },
+    {
+      icon: <Facebook size={20} />,
+      href: "https://www.facebook.com/KRZEngineeringPerth",
+      label: "Facebook",
+    },
+    {
+      icon: <Twitter size={20} />,
+      href: "https://x.com/KrzEngineering",
+      label: "Twitter",
+    },
   ];
 
   return (
@@ -122,7 +140,7 @@ const Footer = () => {
                   size={18}
                   className="mr-3 mt-1 flex-shrink-0 text-krz-light-accent-green"
                 />
-                <span>Perth, Western Australia (Servicing Australia-wide)</span>
+                <span>Rivervale, Perth, Western Australia</span>
               </li>
             </ul>
           </div>

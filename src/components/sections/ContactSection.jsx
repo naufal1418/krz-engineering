@@ -425,11 +425,11 @@ const ContactSection = () => {
                   className="mr-3 mt-1 text-krz-button-green flex-shrink-0"
                 />
                 <span>
-                  Perth, Western Australia <br />
-                  (Servicing all of Australia)
+                  Rivervale <br />
+                  Perth, Western Australia
                 </span>
               </li>
-              <li className="flex items-center">
+              {/* <li className="flex items-center">
                 <Globe
                   size={20}
                   className="mr-3 text-krz-button-green flex-shrink-0"
@@ -442,7 +442,7 @@ const ContactSection = () => {
                 >
                   www.krzengineering.com.au
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
